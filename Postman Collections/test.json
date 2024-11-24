@@ -1,0 +1,852 @@
+{
+	"info": {
+		"_postman_id": "3521680d-7ffd-4897-b5dc-ac96a4b4a4fa",
+		"name": "TMBD",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Tests",
+			"item": [
+				{
+					"name": "Login valid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "90bd4c57-4db6-4fb7-889e-8e743d206dd2",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"//pm.collectionVariables.set(\"account_id\", pm.response.json().id);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "00f281b9-e8de-444d-b535-18434df3e2e8",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "74c1b05d8825e28b96b31566455e8630"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"username\": \"team02test\",\r\n\"password\" : \"testteam9\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "api.themoviedb.org"
+					},
+					"response": []
+				},
+				{
+					"name": "Login Invalid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "29bb98bf-bfcf-4ab5-b2bc-6a5dfc6c1c9f",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Not Found\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "f778a718-e458-4dd3-a076-a25108d717bb",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3NGMxYjA1ZDg4MjVlMjhiOTZiMzE1NjY0NTVlODYzMCIsIm5iZiI6MTczMjQ0NTk2MC4zNDY1MTA0LCJzdWIiOiI2NzQyZjUwZmFhYjcyMmJmYTdjOTBkNTAiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.MsljRt-0ILTZ4ZqE0UZ6t5wFoK3XiCYRw8ROI9t_W2U"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"username\": {{$randomUserName}},\r\n\"password\" : {{$randomPassword}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://api.themoviedb.org/login"
+					},
+					"response": []
+				},
+				{
+					"name": "Account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "830021ef-e43c-44a8-9035-30af3c4a3b88",
+								"exec": [
+									"pm.collectionVariables.set(\"account_id\", pm.response.json().id);\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "fdb0d68b-ab7d-47e1-ad59-af291e691a6b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3NGMxYjA1ZDg4MjVlMjhiOTZiMzE1NjY0NTVlODYzMCIsIm5iZiI6MTczMjQ0NTk2MC4zNDY1MTA0LCJzdWIiOiI2NzQyZjUwZmFhYjcyMmJmYTdjOTBkNTAiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.MsljRt-0ILTZ4ZqE0UZ6t5wFoK3XiCYRw8ROI9t_W2U"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://api.themoviedb.org/3/account"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Watchlist Movies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b9f33de8-8e13-4cc2-88b1-0bef6828e395",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "653e82e7-2759-4f2a-8597-a153a4680f11",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3NGMxYjA1ZDg4MjVlMjhiOTZiMzE1NjY0NTVlODYzMCIsIm5iZiI6MTczMjQ1NjkzMC45MTY3MDQ0LCJzdWIiOiI2NzQyZjUwZmFhYjcyMmJmYTdjOTBkNTAiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.DcSQ7_1VN6dWrafcrX9o4cXNiTTelyjo08Y7-uNWBqA"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "https://api.themoviedb.org/3/account/{{account_id}}}/watchlist/movies"
+					},
+					"response": []
+				},
+				{
+					"name": "Add Movie to Favorites",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "63341fb1-f2f5-4ea2-9a42-a54d1e38eae4",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"console.log(jsonData); \r",
+									"\r",
+									"var movieid = jsonData.data.id;\r",
+									"pm.collectionVariables.set(\"movie_id\", movieid);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "a7cbb54e-de0a-41e8-9de7-bbfc8a7a9fef",
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "c9d1166a-bd2b-4e18-9c41-20ba8cf18e4e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3NGMxYjA1ZDg4MjVlMjhiOTZiMzE1NjY0NTVlODYzMCIsIm5iZiI6MTczMjQ0NTk2MC4zNDY1MTA0LCJzdWIiOiI2NzQyZjUwZmFhYjcyMmJmYTdjOTBkNTAiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.MsljRt-0ILTZ4ZqE0UZ6t5wFoK3XiCYRw8ROI9t_W2U"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"media_type\":\"movie\",\r\n\"media_id\":{{$randomInt}},\r\n\"favorite\":true\r\n} ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://api.themoviedb.org/3/account/{{account_id}}/favorite"
+					},
+					"response": []
+				},
+				{
+					"name": "Add Movie to Watchlist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4ef98694-506f-4452-a188-d69fe5cd98a8",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"console.log(jsonData); \r",
+									"\r",
+									"var watchlistId = jsonData.id;\r",
+									"console.log(\"Matchlist ID:\", watchlistId);\r",
+									"\r",
+									"pm.collectionVariables.set(\"matchlist_id\", watchlistId);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "6957a64d-f63a-4ae2-9e7c-35dff6b09ed1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3NGMxYjA1ZDg4MjVlMjhiOTZiMzE1NjY0NTVlODYzMCIsIm5iZiI6MTczMjQ1NjkzMC45MTY3MDQ0LCJzdWIiOiI2NzQyZjUwZmFhYjcyMmJmYTdjOTBkNTAiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.DcSQ7_1VN6dWrafcrX9o4cXNiTTelyjo08Y7-uNWBqA"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"media_type\":\"movie\",\r\n\"media_id\":{{$randomInt}},\r\n\"watchlist\":true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://api.themoviedb.org/3/account/{{account_id}}}/watchlist"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Favorite Movies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1e0e913f-9194-409d-acd5-f73ee2fe47dc",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "cfa206f8-05d0-43ef-98f3-bc296fbd127f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3NGMxYjA1ZDg4MjVlMjhiOTZiMzE1NjY0NTVlODYzMCIsIm5iZiI6MTczMjQ1NjkzMC45MTY3MDQ0LCJzdWIiOiI2NzQyZjUwZmFhYjcyMmJmYTdjOTBkNTAiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.DcSQ7_1VN6dWrafcrX9o4cXNiTTelyjo08Y7-uNWBqA"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "https://api.themoviedb.org/3/account/{{account_id}}}/favorite/movies"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Rated Movies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "402d25bc-4fa6-4498-b200-e82d094b5540",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "8204f917-76ea-4de9-bee2-0d1dc3122177",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3NGMxYjA1ZDg4MjVlMjhiOTZiMzE1NjY0NTVlODYzMCIsIm5iZiI6MTczMjQ1NjkzMC45MTY3MDQ0LCJzdWIiOiI2NzQyZjUwZmFhYjcyMmJmYTdjOTBkNTAiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.DcSQ7_1VN6dWrafcrX9o4cXNiTTelyjo08Y7-uNWBqA"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "https://api.themoviedb.org/3/account/{{account_id}}}/rated/movies"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Rated TV",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b076d6ca-beb5-4196-9205-6ddf59857709",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "1c184a16-9036-4ecc-894c-f325659ce110",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3NGMxYjA1ZDg4MjVlMjhiOTZiMzE1NjY0NTVlODYzMCIsIm5iZiI6MTczMjQ1NjkzMC45MTY3MDQ0LCJzdWIiOiI2NzQyZjUwZmFhYjcyMmJmYTdjOTBkNTAiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.DcSQ7_1VN6dWrafcrX9o4cXNiTTelyjo08Y7-uNWBqA"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "https://api.themoviedb.org/3/account/{{account_id}}}/rated/tv"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Movie Genres",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a37cf3d0-9af8-455c-8114-e51cbdc38502",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "a55ff815-6886-493a-88ce-f22b90921e85",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3NGMxYjA1ZDg4MjVlMjhiOTZiMzE1NjY0NTVlODYzMCIsIm5iZiI6MTczMjQ1NjkzMC45MTY3MDQ0LCJzdWIiOiI2NzQyZjUwZmFhYjcyMmJmYTdjOTBkNTAiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.DcSQ7_1VN6dWrafcrX9o4cXNiTTelyjo08Y7-uNWBqA"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "https://api.themoviedb.org/3/genre/movie/list"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Now Playing Movies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c188eb6c-e53d-49c4-8acb-9a898ff2b0ee",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "6f7a67ab-2afc-4a45-b0dd-f27d19fa165e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3NGMxYjA1ZDg4MjVlMjhiOTZiMzE1NjY0NTVlODYzMCIsIm5iZiI6MTczMjQ1NjkzMC45MTY3MDQ0LCJzdWIiOiI2NzQyZjUwZmFhYjcyMmJmYTdjOTBkNTAiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.DcSQ7_1VN6dWrafcrX9o4cXNiTTelyjo08Y7-uNWBqA"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "https://api.themoviedb.org/3/movie/now_playing"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Popular Movies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "136d40cb-7c10-4a87-a0a6-08d2b11a7f4a",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "7e083556-7b3f-4eae-9991-20e00b4307c7",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3NGMxYjA1ZDg4MjVlMjhiOTZiMzE1NjY0NTVlODYzMCIsIm5iZiI6MTczMjQ1NjkzMC45MTY3MDQ0LCJzdWIiOiI2NzQyZjUwZmFhYjcyMmJmYTdjOTBkNTAiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.DcSQ7_1VN6dWrafcrX9o4cXNiTTelyjo08Y7-uNWBqA"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "https://api.themoviedb.org/3/movie/popular"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Top Rated Movies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0e4407be-ed03-4331-92dd-b66072d1dce2",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "df2ae075-a62b-4a2f-ab5d-4943c1dec6c1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3NGMxYjA1ZDg4MjVlMjhiOTZiMzE1NjY0NTVlODYzMCIsIm5iZiI6MTczMjQ1NjkzMC45MTY3MDQ0LCJzdWIiOiI2NzQyZjUwZmFhYjcyMmJmYTdjOTBkNTAiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.DcSQ7_1VN6dWrafcrX9o4cXNiTTelyjo08Y7-uNWBqA"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "https://api.themoviedb.org/3/movie/top_rated"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Upcoming Movies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d6790173-5e53-436c-8550-3dbd190079cd",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "52e69314-3ffb-4c67-ae59-c03ae675cf54",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3NGMxYjA1ZDg4MjVlMjhiOTZiMzE1NjY0NTVlODYzMCIsIm5iZiI6MTczMjQ1NjkzMC45MTY3MDQ0LCJzdWIiOiI2NzQyZjUwZmFhYjcyMmJmYTdjOTBkNTAiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.DcSQ7_1VN6dWrafcrX9o4cXNiTTelyjo08Y7-uNWBqA"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "https://api.themoviedb.org/3/movie/upcoming"
+					},
+					"response": []
+				},
+				{
+					"name": "Search for Movies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a1b3f8e7-83eb-4df6-9c3c-b850ba206961",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "df898d8c-a1b4-41c9-9e13-f479eddb67d3",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3NGMxYjA1ZDg4MjVlMjhiOTZiMzE1NjY0NTVlODYzMCIsIm5iZiI6MTczMjQ1NjkzMC45MTY3MDQ0LCJzdWIiOiI2NzQyZjUwZmFhYjcyMmJmYTdjOTBkNTAiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.DcSQ7_1VN6dWrafcrX9o4cXNiTTelyjo08Y7-uNWBqA"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "https://api.themoviedb.org/3/search/movie"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Movie Details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ff6d35fd-fab6-4fce-97bd-ce018a1c5e0e",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "adf7ab94-227a-4c7a-ab76-5fac4a2dca82",
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "ef416f95-a8fe-4f65-8648-35694b460550",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3NGMxYjA1ZDg4MjVlMjhiOTZiMzE1NjY0NTVlODYzMCIsIm5iZiI6MTczMjQ1NjkzMC45MTY3MDQ0LCJzdWIiOiI2NzQyZjUwZmFhYjcyMmJmYTdjOTBkNTAiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.DcSQ7_1VN6dWrafcrX9o4cXNiTTelyjo08Y7-uNWBqA"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "https://api.themoviedb.org/3/movie/{{movie_id}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Search for Keywords",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1717fa08-f257-47ac-aa71-b7d48538810d",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "b2bf61a8-3947-4f7e-bd77-c35078e2f0eb",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3NGMxYjA1ZDg4MjVlMjhiOTZiMzE1NjY0NTVlODYzMCIsIm5iZiI6MTczMjQ1NjkzMC45MTY3MDQ0LCJzdWIiOiI2NzQyZjUwZmFhYjcyMmJmYTdjOTBkNTAiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.DcSQ7_1VN6dWrafcrX9o4cXNiTTelyjo08Y7-uNWBqA"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "https://api.themoviedb.org/3/search/keyword"
+					},
+					"response": []
+				},
+				{
+					"name": "Add Movie Rating",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c1daf53f-8444-40f1-9ce0-4479b6868ffe",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "02e31ab9-67fc-43be-9e21-c136042b1250",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3NGMxYjA1ZDg4MjVlMjhiOTZiMzE1NjY0NTVlODYzMCIsIm5iZiI6MTczMjQ1NjkzMC45MTY3MDQ0LCJzdWIiOiI2NzQyZjUwZmFhYjcyMmJmYTdjOTBkNTAiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.DcSQ7_1VN6dWrafcrX9o4cXNiTTelyjo08Y7-uNWBqA"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"value\":5.5}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://api.themoviedb.org/3/movie/{{movie_id}}}/rating"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Movie Rating",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "18cc1d22-6d32-404d-99b5-95ba3c6bcaf5",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "678f870a-0231-4131-8df4-86ea8fd60cc3",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3NGMxYjA1ZDg4MjVlMjhiOTZiMzE1NjY0NTVlODYzMCIsIm5iZiI6MTczMjQ1NjkzMC45MTY3MDQ0LCJzdWIiOiI2NzQyZjUwZmFhYjcyMmJmYTdjOTBkNTAiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.DcSQ7_1VN6dWrafcrX9o4cXNiTTelyjo08Y7-uNWBqA"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://api.themoviedb.org/3/movie/{{movie_id}}/rating"
+					},
+					"response": []
+				},
+				{
+					"name": "Unauthorized Access",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d564dd29-cbc9-45b2-ba3f-184f19331c4c",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"You don't have permission\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "2d653eaa-ec76-4c2f-b3db-7e011348fb3b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3NGMxYjA1ZDg4MjVlMjhiOTZiMzE1NjY0NTVlODYzMCIsIm5iZiI6MTczMjQ1NjkzMC45MTY3MDQ0LCJzdWIiOiI2NzQyZjUwZmFhYjcyMmJmYTdjOTBkNTAiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.DcSQ7_1VN6dWrafcrX9o4cXNiTTelyjo08Y7-uNWBqA"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"media_id\":18}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.themoviedb.org/3/list/{{list_id}}}/add_item?session_id =",
+							"protocol": "https",
+							"host": [
+								"api",
+								"themoviedb",
+								"org"
+							],
+							"path": [
+								"3",
+								"list",
+								"{{list_id}}}",
+								"add_item"
+							],
+							"query": [
+								{
+									"key": "session_id ",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "a35b64c9-802b-4db7-9d51-eeac136c9cda"
+		}
+	],
+	"variable": [
+		{
+			"key": "account_id",
+			"value": ""
+		},
+		{
+			"key": "movie_id",
+			"value": ""
+		},
+		{
+			"key": "matchlist_id",
+			"value": ""
+		}
+	]
+}
